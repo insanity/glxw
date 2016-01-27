@@ -94,6 +94,13 @@ int glxwInit%(upper_suffix)sCtx(struct glxw%(suffix)s *ctx);
 
         for include in api_includes:
             f.write('#include <%s>\n' % include)
+
+        for func in funcs:
+            f.write('#define %s __DO_NOT_USE_THIS_%s\n' % (func, func))
+        f.write('#include <GL/gl.h>\n')
+        for func in funcs:
+            f.write('#undef %s\n' % (func))
+
         f.write(common);
 
         f.write('\nstruct glxw%s {\n' % suffix)
